@@ -27,8 +27,8 @@ export function parsePageNumber(page: string | null): number {
   return isNaN(parsed) ? 1 : parsed;
 }
 
-export function getPaginationData(
-  items: any[], 
+export function getPaginationData<T>(
+  items: T[], 
   currentPage: number, 
   itemsPerPage: number
 ) {

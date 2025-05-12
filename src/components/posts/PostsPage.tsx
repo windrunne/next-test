@@ -8,23 +8,17 @@ import SearchBar from '@/components/search/SearchBar';
 import PostList from '@/components/posts/PostList';
 import Pagination from '@/components/pagination/Pagination';
 import { PostListSkeleton } from '@/components/ui/Skeleton';
+import { ITEMS_PER_PAGE } from '@/constants';
+import { parsePageNumber } from '@/utils';
 
-const ITEMS_PER_PAGE = 10;
-
-interface PostsPageProps {
-  initialSearchParams: {
-    [key: string]: string | string[] | undefined;
-  };
-}
-
-export default function PostsPage({ initialSearchParams }: PostsPageProps) {
+export default function PostsPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [filteredPosts, setFilteredPosts] = useState<Post[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get('q') || '';
-  const currentPage = parseInt(searchParams.get('page') || '1', 10);
+  const currentPage = parsePageNumber(searchParams.get('page'));
   
   useEffect(() => {
     async function fetchPosts() {
